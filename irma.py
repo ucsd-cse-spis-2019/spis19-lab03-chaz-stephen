@@ -1,3 +1,5 @@
+# Stephen and Chaz
+# Tracks a hurricane based on data given.
 import turtle
 import csv
 
@@ -59,6 +61,16 @@ def irma():
         #(https://docs.python.org/3/library/functions.html#next)
         # pointreader is an iterator
 
+        # Skips first line in csv file.
+        next(pointreader)
+
+        # Sets the speed to 1.
+        t.speed(1)
+
+        # Doesn't draw while moving to starting position.
+        t.penup()
+        t.setpos(-30.3, 16.4)
+
         for row in pointreader:
             # row is a list representing each line in the csv file
             # Each comma separated element is in its own index position
@@ -66,7 +78,43 @@ def irma():
             # row in the file.
             # Make sure you understand what is happening here.
             # Then, you'll need to change this code
-            print("Date:", row[0], "Time:", row[1])
+            #print("Date:", row[0], "Time:", row[1])
+
+            # Uses a different color and width based on the strength of the
+            # hurricane. Also labels the category of the hurricane next to
+            # the line.
+            if int(row[4]) < 74:
+                t.pencolor("white")
+                t.width(2)
+            if int(row[4]) > 73 and int(row[4]) < 96:
+                t.pencolor("blue")
+                t.width(4)
+                t.write(1)
+            if int(row[4]) > 95 and int(row[4]) < 111:
+                t.pencolor("green")
+                t.width(6)
+                t.write(2)
+            if int(row[4]) > 110 and int(row[4]) < 130:
+                t.pencolor("yellow")
+                t.width(8)
+                t.write(3)
+            if int(row[4]) > 129 and int(row[4]) < 157:
+                t.pencolor("orange")
+                t.width(10)
+                t.write(4)
+            if int(row[4]) > 156:
+                t.pencolor("red")
+                t.width(12)
+                t.write(5)
+
+            # Sets the turtle to begin drawing once it reaches the starting
+            # position.
+            t.pendown()
+
+            # Changes position based on the coordinates in the csv file.
+            t.setpos(float(row[3]), float(row[2]))
+
+            
 
 
 
@@ -74,9 +122,10 @@ def irma():
     # Do not remove or change this line
     return map_bg_img
 
-
 # Feel free to add "helper" functions here
 
 
 if __name__ == "__main__":
     bg=irma()
+
+k = input("press close to exit")
